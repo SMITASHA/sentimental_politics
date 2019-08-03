@@ -8,7 +8,6 @@ api_keys.py
 *.sql
 *.sqlite
 
-
 # OS generated files #
 ######################
 .DS_Store
@@ -19,4 +18,9 @@ api_keys.py
 .ipynb_checkpoints
 
 # Byte-compiled / optimized / DLL files
+######################
 __pycache__/
+
+# Large dataset #
+######################
+sent_analysis_dataset.csv
