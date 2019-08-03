@@ -1,0 +1,26 @@
+# API Keys #
+######################
+api_keys.py
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+
+# Jupyter checkpoints #
+######################
+.ipynb_checkpoints
+
+# Byte-compiled / optimized / DLL files
+######################
+__pycache__/
+
+# Large dataset #
+######################
+sent_analysis_dataset.csv
