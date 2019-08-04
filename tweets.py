@@ -53,6 +53,11 @@ def main():
     # Create dictionary of Candidates
     key = ["Biden", "Sanders", "Warren", "Harris"]
     value = ["@JoeBiden", "@BernieSanders", "@ewarren", "@KamalaHarris"]
+    
+    # key = ["Warren", "Harris"]
+    # value = ["@ewarren", "@KamalaHarris"]
+    
+    
     candidates = dict(zip(key, value))
 
     for key in candidates.keys():
