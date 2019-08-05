@@ -23,7 +23,7 @@ def get_tweets(screen_name, since_id):
         q = query,\
         lang = "en",\
         since_id = since_id,\
-        tweet_mode='extended').items(5000)
+        tweet_mode='extended').items(1000)
     
     return tweets
 
