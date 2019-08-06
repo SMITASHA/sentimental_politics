@@ -1,29 +1,15 @@
-/* Artfully masterminded by ZURB  */
 
-/* -------------------------------------------------- 
-   Table of Contents
------------------------------------------------------
-:: Shared Styles
-:: Page Name 1
-:: Page Name 2
-*/
+.selected {
+  margin: 2px;
+  padding: 5px;
+  border: 5px solid #C02702;
+  box-shadow: 0 10px 10px 10px rgba(34, 25, 25, 0.4);
+  font-size: 100%;
+  line-height: 1.4em;
+  float: left;
+}
 
-
-/* -----------------------------------------
-   Shared Styles
------------------------------------------ */
-
-
-
-/* -----------------------------------------
-   Page Name 1
------------------------------------------ */
-
-
-
-
-/* -----------------------------------------
-   Page Name 2
------------------------------------------ */
-
-
+.subheader {
+    font-style: italic;
+    text-align: center;
+}
