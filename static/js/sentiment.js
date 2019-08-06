@@ -1,3 +1,23 @@
+function createViz(candidate) {
+  
+    /**
+    /* Creates visualizations
+    /* @param {string}    candidate    Name of selected candidate
+    */
+
+    // Construct url for path to twitter data for candidate
+    var url = `/candidate/${candidate}`;
+
+    // Fetch tweet data for candidate
+    d3.json(url).then(function (twitterData) {
+        // twitterData is a json - like a list of dictionaries
+        // [{"date": tweet_date, "negative": neg_tweet_no, "postive": pos_tweet_no}]
+        createPie(twitterData);
+        createLine(twitterData);
+    });
+}
+
+
 function createPie(candidate) {
   
     /**
@@ -5,6 +25,7 @@ function createPie(candidate) {
     /* @param {string}    candidate    Name of selected candidate
     */
 
+    // DO MATH TO GET PERCENTAGES
 //    https://bl.ocks.org/mbostock/4341574
   
     var width = 960,
