@@ -7,7 +7,7 @@ api_keys.py
 *.log
 *.sql
 *.sqlite
-
+*.db
 # OS generated files #
 ######################
 .DS_Store
