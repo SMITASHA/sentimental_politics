@@ -8,7 +8,6 @@ from flask import (
     Flask,
     render_template,
     jsonify)
-from joblib import load
 
 # Sqlite 
 import sqlite3
@@ -20,24 +19,32 @@ from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
+# Connect to database
+engine = create_engine("politics_db.db", connect_args={'check_same_thread': False}, echo=True)
 
-#Set up Flask
-app = Flask(__name__)
+# Reflect database and tables into new models
+Base = automap_base()
+Base.prepare(engine, reflect=True)
+Candidates = Base.classes.candidates
+Twitter = Base.classes.twitter
 
-###################################################################
-# GRETEL- NOT SURE WHICH WAY TO GO WITH THE DATABASE STUFF
+# Create our session from Python to the DB
+session = Session(bind=engine)
 
-# Create database
-# conn = sqlite3.connect("tweets.db")
-
+#### OR DO WE DO THIS????####
 # Database Setup
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sentiment.sqlite"
-# db = SQLAlchemy(app)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cancer.sqlite"
+db = SQLAlchemy(app)
 
 # Reflect an existing database and tables
-# Base = automap_base()
-# Base.prepare(db.engine, reflect=True)
-###################################################################
+Base = automap_base()
+Base.prepare(db.engine, reflect=True)
+#########
+
+# Flask Setup
+app = Flask(__name__)
+
+# Define Flask Routes
 @app.route("/")
 def index():
     """Render the homepage."""
@@ -49,19 +56,23 @@ def index():
 @app.route("/candidate/<CANDIDATE>")
 def candidate(candidate):
     """Do something"""
+
+
     
     """For line chart:
 
-    get all tweets from database for parameter candidate
-    put tweets in machine and get sentiment for each tweet
-    for each day,
-        get number of positive tweets for that day
-        get number of negative tweets for that day
+    Using sqalchemy:
+    Group tweets by day
+    Group tweets by sentiment
+    Count number of tweets per sentiment per day
     return list of dictionaries: [{"date": tweet_date, "negative": neg_tweet_no, "postive": pos_tweet_no}]
 
     For pie chart:
-    Use same route and do math in javascript
+    Use same route and do math in javascript"""
 
+
+"""
+    FIGURE OUT WORD CLOUD!!!
     For word cloud:
 
     If we do d3, we need to do this complicated stuff. Might be worthwhile to do another way
@@ -92,7 +103,7 @@ def candidate(candidate):
         counts = []
         for letter, count in counted_words.most_common(10):
             words.append(letter)
-            counts.append(count)
+            counts.append(count)"""
     
 
 
