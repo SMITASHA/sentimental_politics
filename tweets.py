@@ -34,11 +34,11 @@ def convert_tweets(tweets):
 
     tweet_list = []
     for tweet in tweets:
-        tweet_dict = {"ID": tweet.id_str,\
-            "Date": tweet.created_at,\
-            "Text": tweet.full_text,\
-            "Retweet": tweet.retweet_count,\
-            "Favorite": tweet.favorite_count}
+        tweet_dict = {"id": tweet.id_str,\
+            "tweet_date": tweet.created_at,\
+            "tweet": tweet.full_text,\
+            "retweet": tweet.retweet_count,\
+            "favorite": tweet.favorite_count}
         tweet_list.append(tweet_dict)
         
     tweet_df = pd.DataFrame(tweet_list)
@@ -50,39 +50,32 @@ def main():
     """Saves tweets about candidates until given data into csvs"""
     
     
-    # Create dictionary of Candidates
-    key = ["Biden", "Sanders", "Warren", "Harris"]
-    value = ["@JoeBiden", "@BernieSanders", "@ewarren", "@KamalaHarris"]
-    
-    # key = ["Warren", "Harris"]
-    # value = ["@ewarren", "@KamalaHarris"]
-    
-    
-    candidates = dict(zip(key, value))
+    # Create list of candidate usernames
+    usernames = ["@JoeBiden", "@BernieSanders", "@ewarren", "@KamalaHarris"]
 
-    for key in candidates.keys():
+    for username in usernames:
 
         # Check to see if tweets have already been queried and saved
-        file = pathlib.Path(f"data/{key}.csv")
+        file = pathlib.Path(f"data/{username}.csv")
         if file.exists ():
 
             # Convert tweets to dataframe and set last tweet id
             tweet_df = pd.read_csv(file)
-            since_id = tweet_df["ID"].max()
+            since_id = tweet_df["id"].max()
         
         # If no saved tweets, create empty dataframe and initialize tweet id
         else:
             since_id = 0
-            tweet_df = pd.DataFrame(columns=["ID", "Date", "Text", "Retweet", "Favorite"])
+            tweet_df = pd.DataFrame(columns=["id", "tweet_date", "tweet", "retweet", "favorite"])
         
-        # Get tweets and convert to dataframe
-        tweets = get_tweets(candidates[key], since_id)
+            # Get tweets and convert to dataframe
+        tweets = get_tweets(username, since_id)
         new_df = convert_tweets(tweets)
 
         # Append new tweets to old and save to csv
         tweet_df = tweet_df.append(new_df, ignore_index=True, sort=True)
         tweet_df.to_csv(file, index=False, header= True)
-        print(f"Saved tweets to csv for {key}.")
+        print(f"Saved tweets to csv for {username}.")
 
 
 main()
