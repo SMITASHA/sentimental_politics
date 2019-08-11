@@ -39,9 +39,7 @@ def clean_text(string):
     # Remove numbers
     string = re.sub("\d+", "", string)
     # Remove sepcial characters
-    string = re.sub(r"[!#$%&'\\()*+,-./:;<=>?@\^_`{|}~]", " ", string)
-    string = re.sub(r"\[", " ", string)
-    string = re.sub(r"\]", " ", string)
+    string = re.sub(r"[!#$%&'()*+\",.:;<=>?@^_`{|}~\\\/\]\[]", " ", string)
     
     return(string)
 
