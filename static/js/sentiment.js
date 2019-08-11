@@ -5,15 +5,96 @@ function createViz(candidate) {
     /* @param {string}    candidate    Name of selected candidate
     */
 
+    // Define SVG area dimensions
+    var svgWidth = 600;
+    var svgHeight = 400;
+    
+    // Define margins and dimensions of chart area
+    var chartMargin = {
+        top: 50,
+        right: 30,
+        bottom: 80,
+        left: 60
+    };
+    var chartWidth = svgWidth - chartMargin.left - chartMargin.right;
+    var chartHeight = svgHeight - chartMargin.top - chartMargin.bottom;
+
+    // Create svg object and append a group
+    var svg = d3.select("#bar")
+        .append("svg")
+        .attr("width", svgWidth)
+        .attr("height", svgHeight)
+        
+    var chartGroup = svg.append("g")
+        .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`)
+
+    // Creat a tolltip object
+    var toolTip = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([-10, 0])
+        .html(function (d) {
+        return (`<strong>${d.sentiment}:</strong> ${d.twitter_count}`);
+        });
+
     // Construct url for path to twitter data for candidate
     var url = `/candidate/${candidate}`;
 
     // Fetch tweet data for candidate
-    d3.json(url).then(function (twitterData) {
-        // twitterData is a json - like a list of dictionaries
-        // [{"date": tweet_date, "negative": neg_tweet_no, "postive": pos_tweet_no}]
-        createPie(twitterData);
-        createLine(twitterData);
+    d3.json(url).then(function(twitterData) {
+        
+        // Cast number of tweets as a number
+        twitterData.forEach(function (d) {
+            d.tweet_count = +d.tweet_count;
+        });
+
+        // Configure x and y scales
+        var xBandScale = d3.scaleBand()
+            .domain(twitterData.map(d => d.date))
+            .range([0, chartWidth])
+            .padding(0.2);
+        var yLinearScale = d3.scaleLinear()
+            .domain([0, d3.max(twitterData, d => d.tweet_count)])
+            .range([chartHeight, 0]);
+        
+        // Define functions to create axes
+        var bottomAxis = d3.axisBottom(xBandScale);
+        var leftAxis = d3.axisLeft(yLinearScale).ticks(10);
+
+        // Append axes to chart
+        chartGroup.append("g")
+            .call(leftAxis)
+            .attr("stroke", "black")
+            .attr("fill", "black");
+        chartGroup.append("g")
+            .attr("transform", `translate(0, ${chartHeight})`)
+            .call(bottomAxis)
+            .attr("fill", "black")
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("stroke", "black")
+            .attr("transform", "rotate(-65)");
+        
+        //Create bars for chart
+        chartGroup.selectAll("rect")
+            .data(twitterData)
+            .enter()
+            .append("rect")
+            .attr("width", xBandScale.bandwidth())
+            .attr("height", d => chartHeight - yLinearScale(d.twitter_count))
+            .attr("x", d => xBandScale(d.date))
+            .attr("y", d => yLinearScale(d.twitter_count))
+            .attr("fill", "blue")
+            .on("mouseover", toolTip.show)
+            .on("mouseout", toolTip.hide);
+
+        // Add tooltips for chart
+        chartGroup.call(toolTip);
+
+        
+        // createPie(twitterData);
+        // createLine(twitterData);
     });
 }
 
