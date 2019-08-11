@@ -34,7 +34,7 @@ def convert_tweets(tweets):
 
     tweet_list = []
     for tweet in tweets:
-        tweet_dict = {"id": tweet.id_str,\
+        tweet_dict = {"twitter_id": tweet.id_str,\
             "tweet_date": tweet.created_at,\
             "tweet": tweet.full_text,\
             "retweet": tweet.retweet_count,\
@@ -61,12 +61,12 @@ def main():
 
             # Convert tweets to dataframe and set last tweet id
             tweet_df = pd.read_csv(file)
-            since_id = tweet_df["id"].max()
+            since_id = tweet_df["twitter_id"].max()
         
         # If no saved tweets, create empty dataframe and initialize tweet id
         else:
             since_id = 0
-            tweet_df = pd.DataFrame(columns=["id", "tweet_date", "tweet", "retweet", "favorite"])
+            tweet_df = pd.DataFrame(columns=["twitter_id", "tweet_date", "tweet", "retweet", "favorite"])
         
             # Get tweets and convert to dataframe
         tweets = get_tweets(username, since_id)
