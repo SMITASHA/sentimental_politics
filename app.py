@@ -20,7 +20,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
 # Connect to database
-engine = create_engine("politics_db.db", connect_args={'check_same_thread': False}, echo=True)
+engine = create_engine("sqlite:///politics_db.db", connect_args={'check_same_thread': False}, echo=True)
 
 # Reflect database and tables into new models
 Base = automap_base()
@@ -33,12 +33,12 @@ session = Session(bind=engine)
 
 #### OR DO WE DO THIS????####
 # Database Setup
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cancer.sqlite"
-db = SQLAlchemy(app)
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cancer.sqlite"
+# db = SQLAlchemy(app)
 
 # Reflect an existing database and tables
-Base = automap_base()
-Base.prepare(db.engine, reflect=True)
+# Base = automap_base()
+# Base.prepare(db.engine, reflect=True)
 #########
 
 # Flask Setup
@@ -53,9 +53,32 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/candidate/<CANDIDATE>")
+@app.route("/candidate/<candidate>")
 def candidate(candidate):
     """Do something"""
+
+
+    # Get sentiment data 
+    results = session.query(Twitter.tweet_date, Twitter.sentiment, func.count(Twitter.id).label("tweet_count"))\
+        .group_by(Twitter.tweet_date)\
+        .group_by(Twitter.sentiment)\
+        .filter(Twitter.username == candidate)\
+        .all()
+    
+    # Convert query result into list of dictionaries
+    tweet_list = []
+
+    for result in results:
+        if result.sentiment:
+            sentiment = "Positive"
+        else:
+            sentiment = "Negative"
+        tweet_dict = {"date": result.tweet_date, "sentiment": sentiment, "tweet_count": result.tweet_count}
+        tweet_list.append(tweet_dict)
+    
+    # NOTE: WE ARE RETURNING A DIFFERENT TYPE OF DICTIONARY. WILL NEED TO TAKE THIS INTO ACCOUNT ON JS END
+    return jsonify(tweet_list)
+
 
 
     
