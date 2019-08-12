@@ -65,21 +65,26 @@ def candidate(candidate):
         .filter(Twitter.username == candidate)\
         .all()
     
-    # Convert query result into list of dictionaries
-    tweet_list = []
-
+    # Convert query result into 2 lists of dictionaries: one for positive, one for negative
+    positive_tweets = []
+    negative_tweets = []
     for result in results:
         if result.sentiment:
-            sentiment = "Positive"
+            positive_count = result.tweet_count
+            tweet_dict = {"date": result.tweet_date, "positive_count": positive_count}
+            positive_tweets.append(tweet_dict)
         else:
-            sentiment = "Negative"
-        tweet_dict = {"date": result.tweet_date, "sentiment": sentiment, "tweet_count": result.tweet_count}
-        tweet_list.append(tweet_dict)
-    
-    # NOTE: WE ARE RETURNING A DIFFERENT TYPE OF DICTIONARY. WILL NEED TO TAKE THIS INTO ACCOUNT ON JS END
-    return jsonify(tweet_list)
+            negative_count = result.tweet_count
+            tweet_dict = {"date": result.tweet_date, "negative_count": negative_count}
+            negative_tweets.append(tweet_dict)
+        
+    # Convert lists to dataframe and merge on date
+    positive_df = pd.DataFrame(positive_tweets)
+    negative_df = pd.DataFrame(negative_tweets)
+    twitter_df = pd.merge(positive_df, negative_df, on = "date")
 
-
+    # Returned dataframe as json object
+    return twitter_df.to_json(orient = "records")
 
     
     """For line chart:

@@ -36,10 +36,12 @@ def clean_text(string):
     string = re.sub(r"\&\w*;"," ", string)
     # Convert remove twitter usernames
     string = re.sub(r"@[^\s]+","", string)
+    # Remove 1 letter words
+    string = re.sub(r"\W*\b\w\b", "", string)
     # Remove numbers
     string = re.sub("\d+", "", string)
     # Remove sepcial characters
-    string = re.sub(r"[!#$%&'()*+\",.:;<=>?@^_`{|}~\\\/\]\[]", " ", string)
+    string = re.sub(r"[!#$%&'()*+\",.:;<=>?@^_-`{|}~\\\/\]\[]", " ", string)
     
     return(string)
 
@@ -89,8 +91,9 @@ def clean_tweet(tweet, nlp):
     # Remove words from default stop word list that may have impact on sentiment
     nlp.Defaults.stop_words -= {'but', 'again', 'front','keep', 'nothing', 'can', "n't"                                'down','against', 'above', 'nor', 'serious', 'should',                                'not', 'never', 'across', 'bottom', 'least', 'alone',                                 'below','first', 'top', 'up', 'neither', 'without',                                 'empty', 'over', 'no', 'well'}
     
-    # Add spacy -PRON- designation to stop words
-    nlp.Defaults.stop_words |= {"-PRON-",}
+    # Add customized stop words
+    nlp.Defaults.stop_words |= {"-PRON-","joe", "biden", "bernie",\
+        "sanders", "elizabeth", "warren", "kamala", "harris"}
     
     # Lemmatize tweet
     doc = nlp(tweet)
@@ -108,9 +111,12 @@ def clean_tweet(tweet, nlp):
             
             # Add only non-empty strings to text list
             if string.strip():
-                text.append(string)
+                # Verify cleaned word is not stop word:
+                if string not in nlp.Defaults.stop_words:
+                    text.append(string)
 
-    # Return cleaned tweet as single string
-    tweet_cleaned = ' '.join(text)
-    
-    return(tweet_cleaned)
+    # If no text is left, return null; otherwise, return cleaned tweet as single string
+    if not text:
+        return(None)
+    else:
+        return(' '.join(text))

@@ -139,11 +139,6 @@ function createPie(candidate) {
         .ease("bounce")
         .duration(2000)
         .attrTween("d", tweenPie)
-        .transition()
-        .ease("elastic")
-        .delay(function(d, i) { return 2000 + i * 50; })
-        .duration(750)
-        .attrTween("d", tweenDonut);
 
     function tweenPie(b) {
         b.innerRadius = 0;
@@ -151,11 +146,6 @@ function createPie(candidate) {
         return function(t) { return arc(i(t)); };
     }
 
-    function tweenDonut(b) {
-        b.innerRadius = radius * .6;
-        var i = d3.interpolate({innerRadius: 0}, b);
-        return function(t) { return arc(i(t)); };
-    }
 
 }
 
