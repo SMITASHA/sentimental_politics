@@ -20,7 +20,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
 # Connect to database
-engine = create_engine("sqlite:///politics_db.db", connect_args={'check_same_thread': False}, echo=True)
+engine = create_engine("sqlite:///politics_db.sqlite", connect_args={'check_same_thread': False}, echo=True)
 
 # Reflect database and tables into new models
 Base = automap_base()
