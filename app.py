@@ -57,6 +57,7 @@ def index():
 def tweets():
     """Returns list of dates and the maximum number of tweets"""
     
+    
     # Get sentiment data 
     results = session.query(Twitter.tweet_date, Twitter.username, \
         Twitter.sentiment, func.count(Twitter.id).label("tweet_count"))\
