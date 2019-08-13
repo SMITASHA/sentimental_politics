@@ -53,9 +53,43 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/tweets")
+def tweets():
+    """Returns list of dates and the maximum number of tweets"""
+    
+    ##################################
+    # TODO: TEST IN JUPYTER NOTEBOOK
+    # Get sentiment data 
+    results = session.query(Twitter.tweet_date, Twitter.username, \
+        Twitter.sentiment, func.count(Twitter.id).label("tweet_count"))\
+        .group_by(Twitter.tweet_date)\
+        .group_by(Twitter.username)\
+        .group_by(Twitter.sentiment)\
+        .all()
+    
+    # Convert query result into 2 lists of dictionaries: one for positive, one for negative
+    dates = []
+    max_count = 0
+    for result in results:
+        if result.tweet_date not in dates:
+            dates.append(result.tweet_date)
+        if max_count < result.tweet_count:
+            max_count = result.tweet_count
+    
+    tweet_list = []
+    for date in dates:
+        tweet_dict = {"date": date, "max_tweets": max_count}
+        tweet_list.append(tweet_dict)
+
+    # Returned dataframe as json object
+    return jsonify(tweet_list)
+###################
+
+
 @app.route("/candidate/<candidate>")
 def candidate(candidate):
-    """Do something"""
+    """Returns a list of dictionaries with date and number of 
+    positive and negative tweets for each day"""
 
 
     # Get sentiment data 
@@ -86,20 +120,7 @@ def candidate(candidate):
     # Returned dataframe as json object
     return twitter_df.to_json(orient = "records")
 
-    
-    """For line chart:
-
-    Using sqalchemy:
-    Group tweets by day
-    Group tweets by sentiment
-    Count number of tweets per sentiment per day
-    return list of dictionaries: [{"date": tweet_date, "negative": neg_tweet_no, "postive": pos_tweet_no}]
-
-    For pie chart:
-    Use same route and do math in javascript"""
-
-
-"""
+    """
     FIGURE OUT WORD CLOUD!!!
     For word cloud:
 
@@ -132,8 +153,6 @@ def candidate(candidate):
         for letter, count in counted_words.most_common(10):
             words.append(letter)
             counts.append(count)"""
-    
-
 
 
 if __name__ == "__main__":

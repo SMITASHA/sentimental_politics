@@ -20,7 +20,6 @@
       rel="stylesheet"
       type="text/css"
     />
-
   </head>
 
   <body>
@@ -36,13 +35,16 @@
               </h1>
             </div>
             <div class="subheader">
-              <h3>A sentiment analyis of the top democratic candidates through
-                  Twitter.</h3>
+              <h3>
+                A sentiment analyis of the top democratic candidates through
+                Twitter.
+              </h3>
             </div>
           </div>
         </div>
         <!-- end row -->
-            <img width="64" alt="Twitter Logo" src="../static/images/Twitter_Logo_Blue.png"> -->
+
+        <!-- <img width="64" alt="Twitter Logo" src="../static/images/Twitter_Logo_Blue.png"> -->
         <hr />
 
         <div id="container">
@@ -55,7 +57,7 @@
               Here's a bunch of stuff about Joe Biden.
             </p>
             <p style="text-align:center">
-              <a href="#" class="button small radius"
+              <a href="#visualizations" class="button small radius" id="biden-button"
                 >Sentiment on @JoeBiden &raquo;</a
               >
             </p>
@@ -72,7 +74,7 @@
               Here's some stuff about Bernie Sanders.
             </p>
             <p style="text-align:center">
-              <a href="#" class="button small radius"
+              <a href="#visualizations" class="button small radius" id="sanders-button"
                 >Sentiment on @BernieSanders &raquo;</a
               >
             </p>
@@ -89,7 +91,7 @@
               Here's some stuff about Elizabeth Warren.
             </p>
             <p style="text-align:center">
-              <a href="#" class="button small radius"
+              <a href="#visualizations" class="button small radius" id="warren-button"
                 >Sentiment on @ewarren &raquo;</a
               >
             </p>
@@ -106,7 +108,7 @@
               Here's some stuff about Kamala Harris
             </p>
             <p style="text-align:center">
-              <a href="#" class="button small radius"
+              <a href="#visualizations" class="button small radius" id="harris-button"
                 >Sentiment on @KamalaHarris &raquo;</a
               >
             </p>
@@ -116,35 +118,37 @@
         <!-- end container -->
 
         <hr />
-        <div class="row" style="padding-top: 20px">
-          <div class="six columns">
-            <div id="pie">Pie chart here</div>
-          </div>
+        <div class="container" id="visualizations">
+          <div class="row" style="padding-top: 20px">
+            <div class="five columns">
+              <div id="pie">Pie chart here</div>
+            </div>
 
-          <div class="six columns">
-            <div id="bar">Bar chart here</div>
+            <div class="seven columns">
+              <div id="bar">Bar chart here</div>
+            </div>
           </div>
-        </div>
-        <!-- end row -->
-        <div class="row" style="padding-top: 20px">
-          <div class="twelve columns">
-            <div id="cloud">Word Cloud here - center align</div>
+          <!-- end row -->
+          <div class="row" style="padding-top: 20px">
+            <div class="twelve columns">
+              <div id="cloud">Word Cloud here - center align</div>
+            </div>
           </div>
-        </div>
-        <!-- end row -->
+          <!-- end row -->
 
-        <hr />
-        <div class="row" style="padding-top: 20px">
-          <div class="four columns">
-            <div id="pie">Comparison chart here?</div>
-          </div>
+          <hr />
+          <div class="row" style="padding-top: 20px">
+            <div class="four columns">
+              <div id="pie">Comparison chart here?</div>
+            </div>
 
-          <div class="four columns">
-            <div id="line">Comparison chart here?</div>
-          </div>
+            <div class="four columns">
+              <div id="line">Comparison chart here?</div>
+            </div>
 
-          <div class="four columns">
-            <div id="line">Comparison chart here?</div>
+            <div class="four columns">
+              <div id="line">Comparison chart here?</div>
+            </div>
           </div>
         </div>
         <!-- end row -->
@@ -153,15 +157,14 @@
     </div>
     <!-- end page wrap) -->
     <!-- JS Files -->
-    
+
     <script src="../static/js/modernizr.foundation.js"></script>
     <script src="../static/js/foundation.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
     <script src="../static/js/app.js"></script>
-    <!-- <script src="../static/js/test.js"></script> -->
-    <script src="../static/js/pie.js"></script>
+    <!-- <script src="../static/js/pie.js"></script> -->
     <script src="../static/js/sentiment.js"></script>
   </body>
 </html>

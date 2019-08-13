@@ -34,14 +34,18 @@ def clean_text(string):
     string = re.sub(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))\S+","", string)
     # Remove HTML special entities
     string = re.sub(r"\&\w*;"," ", string)
-    # Convert remove twitter usernames
+    # Remove twitter usernames
     string = re.sub(r"@[^\s]+","", string)
-    # Remove 1 letter words
-    string = re.sub(r"\W*\b\w\b", "", string)
     # Remove numbers
     string = re.sub("\d+", "", string)
-    # Remove sepcial characters
-    string = re.sub(r"[!#$%&'()*+\",.:;<=>?@^_-`{|}~\\\/\]\[]", " ", string)
+    # Remove special characters
+    string = re.sub(r"[^\w\s]", " ", string)
+    string = re.sub(r"\_", " ", string)
+    # Remove 1 letter words
+    string = re.sub(r"\W*\b\w\b", "", string)
+    # Remove leftover whitespace
+    if string:
+        string = " ".join(string.split())
     
     return(string)
 
