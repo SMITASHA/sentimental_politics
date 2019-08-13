@@ -25,3 +25,7 @@ __pycache__/
 # Large dataset #
 ######################
 sent_analysis_dataset.csv
+
+# Machine Learning model #
+######################
+twitter_model.joblib
