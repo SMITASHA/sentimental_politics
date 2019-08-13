@@ -20,7 +20,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
 # Connect to database
-engine = create_engine("sqlite:///politics_db.sqlite", connect_args={'check_same_thread': False}, echo=True)
+engine = create_engine("sqlite:///politics.sqlite", connect_args={'check_same_thread': False}, echo=True)
 
 # Reflect database and tables into new models
 Base = automap_base()
@@ -30,16 +30,6 @@ Twitter = Base.classes.twitter
 
 # Create our session from Python to the DB
 session = Session(bind=engine)
-
-#### OR DO WE DO THIS????####
-# Database Setup
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cancer.sqlite"
-# db = SQLAlchemy(app)
-
-# Reflect an existing database and tables
-# Base = automap_base()
-# Base.prepare(db.engine, reflect=True)
-#########
 
 # Flask Setup
 app = Flask(__name__)
@@ -57,7 +47,7 @@ def index():
 def tweets():
     """Returns list of dates and the maximum number of tweets"""
     
-    
+
     # Get sentiment data 
     results = session.query(Twitter.tweet_date, Twitter.username, \
         Twitter.sentiment, func.count(Twitter.id).label("tweet_count"))\
