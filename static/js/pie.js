@@ -1,60 +1,73 @@
-var pieContainer = d3.select("#pie"),
-      width = 400,
-      height = 300,
-      margin = 30;
-  
-var pieSvg = pieContainer
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-// Calculate radius
-const radius = Math.min(width, height) / 2 - margin;
-
 var candidate = "@JoeBiden";
 
 // Construct url for path to twitter data for candidate
 var url = `/candidate/${candidate}`;
 
-
-
 // Fetch tweet data for candidate
 d3.json(url).then(function(twitterData) {
+  var totalPositive = 0;
+  var totalNegative = 0;
 
-    var totalPositive = 0;
-    var totalNegative = 0;
+  twitterData.forEach(function(d) {
+    totalPositive += d.positive_count;
+    totalNegative += d.negative_count;
+  });
 
-    twitterData.forEach(function (d) {
-        totalPositive += d.positive_count;
-        totalNegative += d.negative_count;
+  var data = [
+    { label: "Positive Tweets", value: totalPositive, color: "green" },
+    { label: "Negative Tweets", value: totalNegative, color: "red" }
+  ];
+
+  var pieContainer = d3.select("#pie"),
+    width = 400,
+    height = 300,
+    margin = 30;
+
+  var pieSvg = pieContainer
+    .append("svg:svg")
+    .data([data])
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  // Calculate radius
+  const radius = Math.min(width, height) / 2 - margin;
+
+  const arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(radius);
+
+  const pie = d3.pie() //this will create arc data for us given a list of values
+    .value(function(d) {
+      return d.value;
     });
 
-    const data = {positive: totalPositive, negative: totalNegative};
+  var arcs = pieSvg
+    .selectAll("g.slice") //this selects all <g> elements with class slice (there aren't any yet)
+    .data(pie) //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties)
+    .enter() //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
+    .append("svg:g") //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
+    .attr("class", "slice"); //allow us to style things in the slices (like text)
 
-    // set the color scale
-    var color = d3.scaleOrdinal()
-        .domain(data)
-        .range(["#98abc5", "#8a89a6"]);
+  arcs
+    .append("svg:path")
+    .attr("fill", function(d) {
+      return d.color;
+    })
+    .attr("d", arc)
+    .attr("stroke-width", "6px")
+    .each(function(d) { this._current = d; });
 
-    // Compute the position of each group on the pie:
-    var pie = d3.pie()
-    .value(function(d) {return d.value; });
-    var data_ready = pie(d3.entries(data));
-
-    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-    pieSvg.selectAll('slice')
-        .data(data_ready)
-        .enter()
-        .append('path')
-        .attr('d', d3.arc()
-            .innerRadius(0)
-            .outerRadius(radius)
-        )
-        .attr('fill', function(d){ return(color(d.data.key)) })
-        .attr("stroke", "black")
-        .style("stroke-width", "2px")
-        .style("opacity", 0.7);
+  arcs
+    .append("svg:text")
+    .attr("transform", function(d) {
+      d.innerRadius = 0;
+      d.outerRadius = radius;
+      return "translate(" + arc.centroid(d) + ")";
+    })
+    .attr("text-anchor", "middle")
+    .text(function(d, i) {
+      return data[i].label;
+    });
 });
-
