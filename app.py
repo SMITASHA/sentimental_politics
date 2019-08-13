@@ -57,8 +57,6 @@ def index():
 def tweets():
     """Returns list of dates and the maximum number of tweets"""
     
-    ##################################
-    # TODO: TEST IN JUPYTER NOTEBOOK
     # Get sentiment data 
     results = session.query(Twitter.tweet_date, Twitter.username, \
         Twitter.sentiment, func.count(Twitter.id).label("tweet_count"))\
@@ -83,7 +81,6 @@ def tweets():
 
     # Returned dataframe as json object
     return jsonify(tweet_list)
-###################
 
 
 @app.route("/candidate/<candidate>")
