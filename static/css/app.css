@@ -73,9 +73,12 @@ path {
 }
 
 #gauge {
+  
+  max-height: calc(200px + 20px) !important;
   overflow: hidden;
 }
 
 .modebar {
   display: none !important;
 }
+
