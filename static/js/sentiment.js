@@ -27,6 +27,8 @@ function updateBar(twitterData) {
   
   // Create object for bars
   var dates = chartGroup.selectAll(".date")
+    .remove()
+    .exit()
     .data(twitterData)
     .enter()
     .append("g")
@@ -41,7 +43,7 @@ function updateBar(twitterData) {
     .append("rect")
     .merge(dates)
     .transition()
-    .duration(1000)
+    .duration(100)
     .attr("class", "bar positive_count")
     .style("fill", "green")
     .attr("x", d => xScale1("positive_count"))
@@ -67,7 +69,7 @@ function updateBar(twitterData) {
     .append("rect")
     .merge(dates)
     .transition()
-    .duration(1000)
+    .duration(100)
     .attr("class", "bar negative_count")
     .style("fill", "red")
     .attr("x", d => xScale1("negative_count"))
