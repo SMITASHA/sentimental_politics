@@ -33,8 +33,7 @@ function selectCandidate(candidate) {
       .classed("selected", true);
   }
 
-  // Create word cloud for candidate
-
+  // Remove old word cloud and create new cloud for candidate
   createCloud(candidate);
   // Construct url for path to twitter data for candidate
   var url = `/candidate/${candidate}`;
@@ -54,6 +53,8 @@ function createCloud(candidate) {
 
   // Construct url for path to twitter data for candidate
   var url = `/cloud/${candidate}`;
+
+  $('#cloud').jQCloud('destroy');
 
   $(document).ready(function() {
     // on page load this will fetch data from our flask-app asynchronously
