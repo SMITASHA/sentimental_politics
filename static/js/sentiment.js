@@ -5,6 +5,12 @@ function selectCandidate(candidate) {
     */
 
   // Remove selection styling from other candidate cards
+
+  // var cards = d3.selectAll(".box")
+  //   .classed("selected", false);
+  
+  // cards.select(`#${candidate}`)
+  //   .classed("selected", true);
   
 
   // Apply selection styling to selected candidate card
@@ -23,7 +29,6 @@ function updateBar(twitterData) {
 
   xScale0.domain(twitterData.map(d => d.date));
   xScale1.domain(["positive_count", "negative_count"]).range([0, xScale0.bandwidth()]);
-  // yScale.domain([0, d3.max(twitterData, d => d.positive_count > d.negative_count ? d.positive_count : d.negative_count)]);
   
   // Create object for bars
   var dates = chartGroup.selectAll(".date")
@@ -35,7 +40,7 @@ function updateBar(twitterData) {
     .attr("class", "date")
     .attr("transform", d => `translate(${xScale0(d.date)}, 0)`);
 
-  /* Add positive_count bars */
+  // Add bars for positive tweets
   dates
     .selectAll(".bar.positive_count")
     .data(d => [d])
@@ -43,7 +48,10 @@ function updateBar(twitterData) {
     .append("rect")
     .merge(dates)
     .transition()
-    .duration(100)
+    .duration(500)
+    .delay(function (d, i) {
+      return i * 100;
+    })
     .attr("class", "bar positive_count")
     .style("fill", "green")
     .attr("x", d => xScale1("positive_count"))
@@ -51,7 +59,7 @@ function updateBar(twitterData) {
     .attr("width", xScale1.bandwidth())
     .attr("height", d => {
       return chartHeight - yScale(d.positive_count);
-    });
+    })
     // .on("mouseover", function(d) {
     //   posToolTip.show(d, this);
     //   d3.select(this).style("fill", "green");
@@ -61,7 +69,9 @@ function updateBar(twitterData) {
     //   d3.select(this).style("fill", "blue");
     //   });
 
-    /* Add negative_count bars */
+  
+
+  // Add bars for negative tweets
   dates
     .selectAll(".bar.negative_count")
     .data(d => [d])
@@ -69,7 +79,10 @@ function updateBar(twitterData) {
     .append("rect")
     .merge(dates)
     .transition()
-    .duration(100)
+    .duration(500)
+    .delay(function (d, i) {
+      return i * 100;
+    })
     .attr("class", "bar negative_count")
     .style("fill", "red")
     .attr("x", d => xScale1("negative_count"))
