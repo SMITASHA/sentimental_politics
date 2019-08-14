@@ -36,7 +36,7 @@
             </div>
             <div class="subheader">
               <h3>
-                A sentiment analyis of the top democratic candidates through
+                A sentiment analysis of the top democratic candidates through
                 Twitter.
               </h3>
             </div>
@@ -107,10 +107,12 @@
         <div class="container" id="visualizations">
           <div class="row" style="padding-top: 20px">
             <div class="five columns">
-              <div id="pie"></div>
+                <h4 style="text-align:center">Overall Sentiment for Week</h4>
+              <div id="gauge"></div>
             </div>
 
             <div class="seven columns">
+                <h4 style="text-align:center">Positive v. Negative Sentiment over Week</h4>
               <div id="bar"></div>
             </div>
           </div>
@@ -148,8 +150,8 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="../static/js/app.js"></script>
-    <!-- <script src="../static/js/pie.js"></script> -->
     <script src="../static/js/sentiment.js"></script>
   </body>
 </html>
