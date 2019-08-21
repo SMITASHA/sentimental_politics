@@ -84,7 +84,27 @@ Once the tweet was tokenized, we ran each token through a clean function. First,
 We then replaced all other junk from each token and returned a string in all lowercase.
 ![Cleaning script](static/images/clean.png)
 
-After the token was cleaned, we verified the returned string was not a stop word not an empty string and appended back into the cleaned tweet string.
+After the token was cleaned, we verified the returned string was not a stop word nor an empty string and appended it back into the cleaned tweet string.
+
+### Machine Learning
+
+Created and tested various classification models to analyze tweet sentiment in python using scikit-learn.
+
+We used a previously analyzed twitter dataset from [Sentiment140](http://help.sentiment140.com/for-students) to test and train our models. For speed purposes, we used a random sampling of 25% of the over 1.5 million row dataset. We first attempted to use a larger slice of the dataset, but the time and size cost was unwieldy. We found that using a smaller dataset did not significantly impact the accuracy of the models.
+
+Once we chose our slice, we did a basic cleaning of the dataset by checking for missing values, verifying data were of the correct type, and dropping unnecessary columns. We then applied the previously defined cleaning function to the tweets.
+
+We then split our data into training and testing sets using the default 75%:25% split. To optimize each of our models and prevent overfitting, we created transformation pipelines and set of parameters to test using the GridSearchCV module.
+
+First, we tested the Multinomial Naive Bayes Classifier. This classifier is based on assumption that the probability of each event is independent of all other events, as applied to datasets with multiple variables. ### GRETEL - VERIFY THIS DEFINITION### This is a popular model used in sentiment analysis and tends to produce relatively accurate models, even though it is counterintuitive to think of words being completely independent of each other.
+
+GRETEL - ### UPDATE SCREENSHOTS###
+
+We used the TfidVectorizer to vectorize ##GRETEL - IT DOES MORE THAN JUST VECTORIZE### the features, testing it with various parameters. #GRETEL - GO INTO TESTING THE VARIOUS PARAMETERS HERE. Then we added the Multinomial Naive Bayes Classifier to the pipeline with different alphas. #GRETEL - CONSIDER ADDING MORE PARAMETERS TO TEST.
+![Multinomial Naive Bayes Model](static/images/MNB.png)
+
+After fitting, we obtained the parameters that led to the best model and printed accuracy metrics.
+![Multinomial Naive Bayes Best Model](static/images/MNB_best.png)
 
 ## Setup
 
