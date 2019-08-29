@@ -96,15 +96,24 @@ Once we chose our slice, we did a basic cleaning of the dataset by checking for 
 
 We then split our data into training and testing sets using the default 75%:25% split. To optimize each of our models and prevent overfitting, we created transformation pipelines and set of parameters to test using the GridSearchCV module.
 
-First, we tested the Multinomial Naive Bayes Classifier. This classifier is based on assumption that the probability of each event is independent of all other events, as applied to datasets with multiple variables. ### GRETEL - VERIFY THIS DEFINITION### This is a popular model used in sentiment analysis and tends to produce relatively accurate models, even though it is counterintuitive to think of words being completely independent of each other.
+First, we tested the Multinomial Naive Bayes Classifier. This classifier is based on assumption that the probability of each event is independent of all other events. This is a popular model used in sentiment analysis and tends to produce relatively accurate models, even though it is counterintuitive to think of words being completely independent of each other.
 
 GRETEL - ### UPDATE SCREENSHOTS###
 
-We used the TfidVectorizer to vectorize ##GRETEL - IT DOES MORE THAN JUST VECTORIZE### the features, testing it with various parameters. #GRETEL - GO INTO TESTING THE VARIOUS PARAMETERS HERE. Then we added the Multinomial Naive Bayes Classifier to the pipeline with different alphas. #GRETEL - CONSIDER ADDING MORE PARAMETERS TO TEST.
+We used the TfidVectorizer to first vectorize the features into a count matrix and then tranform that matrix to a normalized frequency representation, using various parameters, including using tf (term-frequency) versus tf-idf (term-frequency times inverse document-frequency) transformation. Then we added the Multinomial Naive Bayes Classifier to the pipeline with different alphas. In future development of this project, we may include more parameters to test.
 ![Multinomial Naive Bayes Model](static/images/MNB.png)
 
 After fitting, we obtained the parameters that led to the best model and printed accuracy metrics.
 ![Multinomial Naive Bayes Best Model](static/images/MNB_best.png)
+
+After determining the best model using the Multinomial Naive Bayes Classifier, we performed the same model fitting with the Complement Naive Bayes Classifier. This classifier uses statistics from the *complement* of each class to compute the model's weights. Many times, this model works better for working with natural language processing.
+![Multinomial Naive Bayes Model](static/images/MNB.png)
+
+GRETEL - ### INSERT SCREENSHOTS###
+
+After fitting, we obtained the parameters that led to the best model and printed accuracy metrics.
+![Multinomial Naive Bayes Best Model](static/images/MNB_best.png)
+GRETEL - ### INSERT CORRECT SCREENSHOT###
 
 ## Setup
 
