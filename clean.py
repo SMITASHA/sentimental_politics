@@ -7,14 +7,21 @@ def replace_emoticons(tweet):
 
     
     # Define emoticons to be replaced
-    emoticons ={'Good': [':-)', ':)', ';)', ':o)', ':]', ':3', ':c)', ':>', '=]', '8)', '=)',                          ':}', ':^)', ':-D', ':D', '8-D', '8D', 'x-D', 'xD', 'X-D', 'XD', '=-D',                          '=D', '=-3', '=3', ':-))', ":'-)", ":')", ':*', ':^*', '>:P', ':-P',                          ':P', 'X-P','x-p', 'xp', 'XP', ':-p', ':p', '=p', ':-b', ':b', '>:)',                          '>;)', '>:-)', '<3'],                'Bad': [':L', ':-/', '>:/', ':S', '>:[', ':@', ':-(', ':[', ':-||', '=L', ':<',                        ':-[', ':-<', '=\\', '=/', '>:(', ':(', '>.<', ":'-(", ":'(", ':\\', ':-c',                        ':c', ':{', '>:\\', ';(']}
+    emoticon_pos = [':-)', ':)', ';)', ':o)', ':]', ':3', ':c)', ':>', '=]', '8)', '=)',\
+                    ':}', ':^)', ':-D', ':D', '8-D', '8D', 'x-D', 'xD', 'X-D', 'XD',\
+                    '=-D', '=D', '=-3', '=3', ':-))', ":'-)", ":')", ':*', ':^*', '>:P',\
+                    ':-P',':P', 'X-P','x-p', 'xp', 'XP', ':-p', ':p', '=p', ':-b', ':b',\
+                    '>:)','>;)', '>:-)', '<3']
+    emoticon_neg = [':L', ':-/', '>:/', ':S', '>:[', ':@', ':-(', ':[', ':-||', '=L',\
+                    ':<',':-[', ':-<', '=\\', '=/', '>:(', ':(', '>.<', ":'-(", ":'(",\
+                    ':\\', ':-c',':c', ':{', '>:\\', ';(']
     
-    # If a tweet in a tweet is an emoticon, replace that emoticon with positive/negative word
-    for emoticon_key, emoticon_val in emoticons.items():
-        if tweet in emoticon_val:
-            tweet = emoticon_key
-            break
-        
+    # If a word in a tweet is an emoticon, replace that emoticon good/bad
+    for emoticon in emoticon_pos:
+        tweet.replace(emoticon, "Good", tweet)
+    for emoticon in emoticon_neg:
+        tweet.replace(emoticon, "Bad", tweet)
+
     return(tweet)
 
 
