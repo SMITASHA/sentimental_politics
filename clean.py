@@ -7,6 +7,7 @@ def replace_emoticons(tweet):
 
     
     # Define emoticons to be replaced
+<<<<<<< HEAD
     emoticon_pos = [':-)', ':)', ';)', ':o)', ':]', ':3', ':c)', ':>', '=]', '8)', '=)',\
                     ':}', ':^)', ':-D', ':D', '8-D', '8D', 'x-D', 'xD', 'X-D', 'XD',\
                     '=-D', '=D', '=-3', '=3', ':-))', ":'-)", ":')", ':*', ':^*', '>:P',\
@@ -22,11 +23,29 @@ def replace_emoticons(tweet):
     for emoticon in emoticon_neg:
         tweet.replace(emoticon, "Bad", tweet)
 
+=======
+    emoticons ={'Good': [':-)', ':)', ';)', ':o)', ':]', ':3', ':c)',\
+        ':>', '=]', '8)', '=)',':}', ':^)', ':-D', ':D', '8-D', '8D',\
+        'x-D', 'xD', 'X-D', 'XD', '=-D', '=D', '=-3', '=3', ':-))',\
+        ":'-)", ":')", ':*', ':^*', '>:P', ':-P', ':P', 'X-P','x-p',\
+        'xp', 'XP', ':-p', ':p', '=p', ':-b', ':b', '>:)', '>;)', '>:-)',\
+        '<3'],
+        'Bad': [':L', ':-/', '>:/', ':S', '>:[', ':@', ':-(', ':[', ':-||',\
+        '=L', ':<', ':-[', ':-<', '=\\', '=/', '>:(', ':(', '>.<', ":'-(",\
+        ":'(", ':\\', ':-c', ':c', ':{', '>:\\', ';(']}
+    
+    # Replace positive and negative emoticons with "good" or "bad"
+    for emoticon_key, emoticon_val in emoticons.items():
+        if tweet in emoticon_val:
+            tweet = emoticon_key
+            break
+        
+>>>>>>> master
     return(tweet)
 
 
 def clean(tweet):
-    """Cleans given tweet from tweet to prepare for using in machine learning model"""
+    """Clean given tweet to prepare for use in machine learning model"""
     
 
     # Replace emoticons
