@@ -7,11 +7,6 @@ Sentiment Analysis of the top 2020 Presidential Candidates.
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Development Process](#development-process)
-* [Setup](#setup)
-* [Features](#features)
-* [Status](#status)
-* [Inspiration](#inspiration)
-* [Resources](#resources)
 * [Contact](#contact)
 
 ## General info
@@ -106,28 +101,6 @@ After fitting, we obtained the parameters that led to the best model and printed
 
 As shown, the Complement Naive Bayes Model outperformed the Multinomial Naive Bayes Model, so we saved that model to apply to the candidates' tweets.
 
-## Setup
-
-Describe how to install / setup your local environement / add link to demo version.
-Remember to download NLTK and spacy dictionaries
-
-## Features
-
-List of features ready and TODOs for future development
-
-* Awesome feature 1
-* Awesome feature 2
-* Awesome feature 3
-
-To-do list:
-
-* Wow improvement to be done 1
-* Wow improvement to be done 2
-
-## Inspiration
-
-Add here credits. Project inspired by..., based on...
-
 ## Resources
 
 * [Sentiment140 Twitter Corpus](http://help.sentiment140.com/for-students) - Previously analyzed twitter corpus that we used to train and test machine learning models for twitter sentiment analysis.
@@ -139,4 +112,4 @@ Add here credits. Project inspired by..., based on...
 ## Contact
 
 Created by [Gretel Uptegrove](https://gretelup.github.io/) &
-[Smita Sharma](https://)
+Smita Sharma
